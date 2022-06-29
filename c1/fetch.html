@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!--Ejercicio M04 C01
+    Aplicaciones web - Ejercicio en clase 01
+    Cree una función asíncrona getUsers(names), que obtenga una matriz de inicios
+    de sesión de GitHub, obtenga los usuarios de GitHub y devuelva una matriz de
+    usuarios de GitHub.
+    La URL de GitHub con información de usuario para lo dado USERNAME es:
+    https://api.github.com/users/USERNAME.
+    Detalles importantes:
+    ● Debe haber una solicitud fetch por el usuario.
+    ● Las solicitudes no deben esperarse unas a otras. Para que los datos lleguen
+    lo antes posible.
+    ● Si alguna solicitud falla, o si no hay tal usuario, la función debería regresar
+    null en la matriz resultante-->
+  <script>
+
+    const names = ['mauriciovr7', 'monicacofre', 'asdf']
+    const usuarios = []
+
+    function getUsers(names) {
+      // voy a ir a buscar los datos de todos los usuarios en el array "names"
+
+      for (let name of names) {
+        fetch(url)
+          .then(datos => datos.json()) // recibo y desempaqueto
+          .then(usuarios => { // datos
+            console.log(datos)
+            usuarios.push(usuarios) // datos
+          })
+      }
+
+      const url = `https://api.github.com/users/${names[0]}` // 1
+      fetch(url)
+        .then(datos => datos.json()) // recibo y desempaqueto
+        .then(usuarios => { // datos
+          console.log(datos)
+          usuarios.push(usuarios) // datos
+        })
+      fetch(`https://api.github.com/users/${names[1]}`) // 2
+        .then(datos => datos.json())
+        .then(datos => {
+          console.log(datos)
+          //usuarios.push(datos)
+        })
+        .catch(error => console.log(error))
+
+      return usuarios
+    }
+    // getUsers(names)
+
+    console.log('usuarios ', getUsers(names))
+
+    //const matriz_sesion = 'algo';
+    //const matriz_usuario = 'algo';
+  </script>
+</body>
+
+</html>
