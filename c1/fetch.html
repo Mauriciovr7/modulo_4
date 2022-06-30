@@ -24,37 +24,38 @@
     null en la matriz resultante-->
   <script>
 
-    const names = ['mauriciovr7', 'monicacofre', 'asdf']
+    // const names = ['mauriciovr7', 'monicacofre', 'asdf']
+    const names = ['mauriciovr7']
     const usuarios = []
 
     function getUsers(names) {
       // voy a ir a buscar los datos de todos los usuarios en el array "names"
 
       for (let name of names) {
-        fetch(url)
+        fetch(`https://api.github.com/users/${names}`)
           .then(datos => datos.json()) // recibo y desempaqueto
           .then(usuarios => { // datos
-            console.log(datos)
+            console.log(usuarios)
             usuarios.push(usuarios) // datos
           })
       }
 
-      const url = `https://api.github.com/users/${names[0]}` // 1
-      fetch(url)
-        .then(datos => datos.json()) // recibo y desempaqueto
-        .then(usuarios => { // datos
-          console.log(datos)
-          usuarios.push(usuarios) // datos
-        })
-      fetch(`https://api.github.com/users/${names[1]}`) // 2
-        .then(datos => datos.json())
-        .then(datos => {
-          console.log(datos)
-          //usuarios.push(datos)
-        })
-        .catch(error => console.log(error))
+      // const url = `https://api.github.com/users/${names[0]}` // 1
+      // fetch(url)
+      //   .then(datos => datos.json()) // recibo y desempaqueto
+      //   .then(usuarios => { // datos
+      //     console.log(datos)
+      //     usuarios.push(usuarios) // datos
+      //   })
+      // fetch(`https://api.github.com/users/${names[1]}`) // 2
+      //   .then(datos => datos.json())
+      //   .then(datos => {
+      //     console.log(datos)
+      //     //usuarios.push(datos)
+      //   })
+      //   .catch(error => console.log(error))
 
-      return usuarios
+      // return usuarios
     }
     // getUsers(names)
 

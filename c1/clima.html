@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clima</title>
+
+  <style>
+    h2 {
+      text-shadow: 2px 2px 8px #FF0000;
+    }
+
+    h3 {
+      color: white;
+      text-shadow: 2px 2px 4px #000000;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>hola</h2>
+  <h3></h3>
+
+  <script src="./clave.js"></script>
+  <script>
+    // etiquetas HTML
+    const h2 = document.querySelector('h2')
+    const h3 = document.querySelector('h3')
+
+    // func q devuelve una promesa
+    function get_ubicacion() {
+      return new Promise(function(todo_ok, algun_error){ // func anonima (molde) (resolve, reject)
+        // promesa
+        navigator.geolocation.getCurrentPosition(function(datos) {
+          todo_ok(datos) // resolve
+        })
+      }) 
+    }
+
+    get_ubicacion()
+    .then(datos => {
+      const latitude = datos.coords.latitude
+      const longitude = datos.coords.longitude
+      // debugger
+      return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${clave}`) // funcion que devuelve una promesa
+    })
+    .then(datos => datos.json()) // desempaquetar  // funcion que devuelve una promesa
+        .then(clima => {
+          console.log(clima)
+          h2.textContent = `La temperatura en ${clima.name} es de ${(clima.main.temp - 273).toFixed(2)}°C`
+          h3.textContent = `Y la presión es de ${(clima.main.pressure).toFixed(2)}mb`
+        })
+        .catch(error => console.log(error))
+
+
+    // CALLBACKS
+    /* navigator.geolocation.getCurrentPosition(function (datos) { // callback lo ejecuta el navegador(aca se usa por getCurrentPosition)
+      const latitude = datos.coords.latitude
+      const longitude = datos.coords.longitude
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${clave}`) // funcion que devuelve una promesa
+        .then(datos => datos.json()) // desempaquetar  // funcion que devuelve una promesa
+        .then(clima => {
+          console.log(clima)
+          h2.textContent = `La temperatura en ${clima.name} es de ${(clima.main.temp - 273).toFixed(2)}°C`
+          h3.textContent = `Y la presión es de ${(clima.main.pressure).toFixed(2)}mb`
+        })
+        .catch(error => console.log(error))
+    })
+    console.log('Datos recibidos') */
+  </script>
+</body>
+
+</html>
