@@ -31,28 +31,67 @@
 
     // func q devuelve una promesa
     function get_ubicacion() {
-      return new Promise(function(todo_ok, algun_error){ // func anonima (molde) (resolve, reject)
+      return new Promise(function (todo_ok, algun_error) { // func anonima (molde) (resolve, reject) (success, )
         // promesa
-        navigator.geolocation.getCurrentPosition(function(datos) {
+        navigator.geolocation.getCurrentPosition(function (datos) {
           todo_ok(datos) // resolve
         })
-      }) 
+      })
     }
 
-    get_ubicacion()
-    .then(datos => {
+    // promesas
+    // get_ubicacion()
+    // .then(datos => {
+    //   const latitude = datos.coords.latitude
+    //   const longitude = datos.coords.longitude
+    //   // debugger
+    //   return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${clave}`) // funcion que devuelve una promesa
+    // })
+    // .then(datos => datos.json()) // desempaquetar  // funcion que devuelve una promesa
+    //     .then(clima => {
+    //       console.log(clima)
+    //       h2.textContent = `La temperatura en ${clima.name} es de ${(clima.main.temp - 273).toFixed(2)}°C`
+    //       h3.textContent = `Y la presión es de ${(clima.main.pressure).toFixed(2)}mb`
+    //     })
+    //     .catch(error => console.log(error))
+
+
+    // promesas async/await y el IIFE
+    /* async function get_temperatura() { // funcion async para crear funciones asincrona y esperar con await
+      const datos = await get_ubicacion() // obtener ubicacion // pendiente // await = esperar promesa
       const latitude = datos.coords.latitude
       const longitude = datos.coords.longitude
-      // debugger
-      return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${clave}`) // funcion que devuelve una promesa
-    })
-    .then(datos => datos.json()) // desempaquetar  // funcion que devuelve una promesa
-        .then(clima => {
-          console.log(clima)
-          h2.textContent = `La temperatura en ${clima.name} es de ${(clima.main.temp - 273).toFixed(2)}°C`
-          h3.textContent = `Y la presión es de ${(clima.main.pressure).toFixed(2)}mb`
-        })
-        .catch(error => console.log(error))
+
+      const datos2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${clave}`) // pendiente
+
+      const clima = await datos2.json() // desempaquetar // pendiente
+
+      const temperatura = (clima.main.temp - 273).toFixed(2)
+      h2.textContent = `La temperatura en ${clima.name} es de ${temperatura}°C`
+    }
+    get_temperatura() // invocar funcion */
+
+    // (async function () { // funcion async para crear funciones asincrona y esperar con await
+
+    //   try {
+
+    //     const datos = await get_ubicacion() // obtener ubicacion // pendiente // await = esperar promesa
+    //     const latitude = datos.coords.latitude
+    //     const longitude = datos.coords.longitude
+
+    //     const datos2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${clave}`) // pendiente
+
+    //     const clima = await datos2.json() // desempaquetar // pendiente
+
+    //     const temperatura = (clima.main.temp - 273).toFixed(2)
+    //     h2.textContent = `La temperatura en ${clima.name} es de ${temperatura}°C`
+
+    //   } catch (error) {
+
+    //     console.log(error)
+
+    //   }
+    // })() // invocar funcion anónimo automaticamente // IIFE 
 
 
     // CALLBACKS
@@ -69,6 +108,64 @@
         .catch(error => console.log(error))
     })
     console.log('Datos recibidos') */
+
+
+    /* 
+    Se requiere desarrollar un programa con JavaScript, que al ser ejecutado en la consola del
+    navegador web, muestre los primeros 20 títulos de álbumes ofrecidos por una URL en la
+    nube, esto se puede lograr mediante el “id” que tiene cada objeto, que entrega la URL. Los
+    títulos de cada álbum se pueden rescatar desde el siguiente Link.
+    Igualmente, después de pasar 3 segundos, se debe mostrar un mensaje en la consola del
+    navegador web indicando que la información fue enviada.
+
+    */
+
+    // Crear una función asíncrona que contenga la URL en una variable.
+    (async function () { // funcion async para crear funciones asincrona y esperar con await
+      const url = `https://jsonplaceholder.typicode.com/photos`
+
+      /* mediante el bloque de try/catch conectarse a la URL indicada anteriormente
+      con el método fetch, utilizando a la vez await para que retorne directamente el valor
+      de la promesa. */
+
+      // let datos2 = await fetch(url) // pendiente
+
+
+      try {
+
+        let datos2 = await fetch(url) // pendiente
+        let fotos = await datos2.json() // desempaquetar // pendiente
+
+        // mostrar los primeros 20 títulos de álbumes de acuerdo al número de id indicados por la URL.
+
+        // for (let i = 0; i < 20; i++) {
+        //   console.log(fotos[i].title)
+        //   h3.textContent = `foto ${fotos[i].id}`
+        // }
+
+        fotos = fotos.slice(0, 20)
+        fotos.map(foto => console.log(foto.title)) // singular .title // solo los titulos
+
+        // mediante el uso del await reciba directamente el valor y lo muestra por la consola del navegador web
+        await esperar()
+
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+
+    // crear otra función que retorne una promesa, la cual debe tardar tres (3) segundos
+    // en resolver la promesa para retornar el mensaje: “Información Enviada”
+    function esperar() {
+      // return new Promise(function (succes, failure)
+      return new Promise(function (todo_ok, algun_error) {
+        //acá adentro escribo el codigo de la promesa
+        let time = setTimeout(function () {
+          console.log('información fue enviada')
+        }, 3000)
+      })
+    }
+
   </script>
 </body>
 

@@ -24,20 +24,22 @@
     null en la matriz resultante-->
   <script>
 
-    // const names = ['mauriciovr7', 'monicacofre', 'asdf']
-    const names = ['mauriciovr7']
+    //let names = ['mauriciovr7', 'monicacofre', 'asdf']
+    let names = []
     const usuarios = []
 
     function getUsers(names) {
       // voy a ir a buscar los datos de todos los usuarios en el array "names"
 
       for (let name of names) {
-        fetch(`https://api.github.com/users/${names}`)
+        fetch(`https://api.github.com/users/${name}`)
           .then(datos => datos.json()) // recibo y desempaqueto
-          .then(usuarios => { // datos
-            console.log(usuarios)
-            usuarios.push(usuarios) // datos
+          .then(datos => { // datos
+            //console.log(datos)
+            //debugger
+            usuarios.push(datos) // datos
           })
+          .catch(error => console.log(error))
       }
 
       // const url = `https://api.github.com/users/${names[0]}` // 1
@@ -55,14 +57,39 @@
       //   })
       //   .catch(error => console.log(error))
 
-      // return usuarios
+      return usuarios
     }
     // getUsers(names)
 
-    console.log('usuarios ', getUsers(names))
+    //console.log('usuarios ', getUsers(names))
+    console.log('usuarios ', getUsers(['mauriciovr7', 'monicacofre', 'asdf', 'x', '0', '+']))
 
     //const matriz_sesion = 'algo';
     //const matriz_usuario = 'algo';
+
+    //
+    /* let user = {
+      nombre: "Flor",
+      apellido: "Páez",
+    };
+    let respuesta = await
+    fetch("/article/fetch/post/user", {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(user),
+    });
+    let result = await respuesta.json();
+    alert(result.message); */
+
+    //
+    let url1 = new URL('http://plataforma5.iicap.cl/user/profile');
+    let url2 = new URL('/user/profile', 'https://javascript.infohttp://plataforma5.iicap.cl');
+
+    console.log(url1); // http://plataforma5.iicap.cl/user/profile
+    console.log(url2); // http://plataforma5.iicap.cl/user/profile
   </script>
 </body>
 
