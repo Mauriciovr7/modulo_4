@@ -123,6 +123,8 @@
     const imgUs2 = document.querySelector('#img_us2')
     const imgWin = document.querySelector('#img_win')
 
+    // const ul_store = document.createElement('ul')
+
     // vars globals
     let pr = nfe = nfo = pg = ts = 0
     let names = ['+']
@@ -162,7 +164,8 @@
       //ul_content.innerHTML = ''
 
       (async () => {
-        datos1 = await cargarDatos(usuario1.value)
+        console.log('us_',usuario1.value,'_')
+        datos1 = await cargarDatos(usuario1.value.trim())
         h2_us1.textContent = usuario1.value
         const u1 = datos1.login
         avatar = datos1.avatar_url
@@ -203,7 +206,7 @@
     btn_go2.addEventListener('click', function () {
 
       (async () => {
-        datos2 = await cargarDatos(usuario2.value)
+        datos2 = await cargarDatos(usuario2.value.trim()) // trim para ignorar espacio
         h2_us2.textContent = usuario2.value
         const u2 = datos2.login
         avatar = datos2.avatar_url
