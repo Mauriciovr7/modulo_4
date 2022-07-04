@@ -12,66 +12,68 @@ class Item {
   }
   crearDiv(nuevaTarea) {
 
-    /* div_container.innerHTML += `<div class="item">
-    <input class="item-input" type="text" placeholder=${nuevaTarea} disabled>
-    <button class="boton-editar"><i class="fa-solid fa-lock"></i></button>
-    <button class="boton-remover"><i class="fa-solid fa-trash"></i></button>
-  </div>` */
-
-    ////////////
-
-    // for (let i = 0; i < div_container.length; i++) {
-
-    console.log(i)
-
-    // let inputItem = document.createElement("input"); 
-
-    //`<div class="item${i}">
-    div_container.innerHTML += `<div class="item">
+    /*  div_container.innerHTML += `<div class="item">
       <input class="item-input" type="text" placeholder=${nuevaTarea} disabled>
-      <button class="boton-editar"><i class="fa-solid fa-lock"></i></button>
-      <button class="boton-remover"><i class="fa-solid fa-trash"></i></button>
-    </div>`
+      <button class="boton-editar"><i class="fas fa-lock"></i></button>
+      <button class="boton-remover"><i class="fas fa-trash"></i></button>
+     </div>` */
+
+    // input , div // pasos a seguir segun tarea
+    const inputItem = document.createElement('input')
+    inputItem.setAttribute("type", "text");
+    inputItem.setAttribute("disabled", '');
+    inputItem.classList.add('item-input')
+    inputItem.value = nuevaTarea
+    const newDiv = document.createElement('div')
+    newDiv.classList.add('Item')
+    // button
+    const botonEditar = document.createElement('button')
+    botonEditar.innerHTML = '<i class="fas fa-lock"></i>'
+    botonEditar.classList.add('boton-editar')
+    const botonRemover = document.createElement('button')
+    botonRemover.innerHTML = '<i class="fas fa-trash"></i>'
+    botonRemover.classList.add('boton-remover')
+    // agregar elementos
+    newDiv.appendChild(inputItem)
+    newDiv.appendChild(botonEditar)
+    newDiv.appendChild(botonRemover)
+    div_container.appendChild(newDiv)
+
 
     let div_item = document.querySelectorAll('.item')
     for (let item of div_item) {
-      //span.remove()
-      console.log('div')
     }
 
+    let btn_ed = document.querySelectorAll('.boton-editar')
+
+    btn_ed[i].addEventListener("click", function () {
+      console.log('edit')
+      console.log(this.previousSibling)
+      if (this.previousSibling.hasAttribute('disabled')) { // == ''
+        console.log('nada')
+        this.innerHTML = '<i class="fas fa-unlock"></i>'
+        this.previousSibling.removeAttribute("disabled")
+      } else {
+        this.innerHTML = '<i class="fas fa-lock"></i>'
+        this.previousSibling.setAttribute("disabled", '')
+      }
+    })
+
     let btn_del = document.querySelectorAll('.boton-remover')
-    for (let j = 0; j < btn_del.length; j++) {
-      btn_del[j].addEventListener("click", function () {
-        this.classList.add('lupa')
-        console.log(this.parentNode.remove())
+    for (let k = 0; k < btn_del.length; k++) {
+      btn_del[k].addEventListener("click", function () {
+        this.parentNode.remove()
       })
     }
 
-    /* btn_del[i].addEventListener('click', function () {
-      //btn_del.parentNode.remove()
-      console.log('btn_del[i].parentNode')
-      // div_item.style['visibility'] = 'visible'
-    }) */
-    //}
-
-    ///////////
-    // const btn_del = document.querySelector('.boton-remover')
-
-    // btn_del.addEventListener('click', function () {
-    //   console.log('del')
-    //   btn_del.parentNode.remove()
-    // })
-
     i++
-
   }
 }
 
 btn_add.addEventListener('click', function () {
   if (input_ppal.value) {
-    let nuevaTarea = new Item(input_ppal.value)
+    let nuevaTarea = new Item(input_ppal.value.trim())
     input_ppal.value = ''
   }
-
 })
 

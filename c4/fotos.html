@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fotos</title>
+
+  <style>
+    h2 {
+      text-shadow: 2px 2px 8px #FF0000;
+    }
+
+    h3 {
+      color: white;
+      text-shadow: 2px 2px 4px #000000;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>hola</h2>
+  <h3></h3>
+
+  <script>
+    // etiquetas HTML
+    const h2 = document.querySelector('h2')
+    const h3 = document.querySelector('h3')
+    ///////////////////
+    const cargarDatos = async () => {
+      try {
+        const url = "https://jsonplaceholder.typicode.com/todos/1";
+        const res = await fetch(url);
+        if (res.ok) {
+          const datos = await res.json();
+          //console.log(datos);
+
+          return datos
+        } else {
+          console.log(res.status); // 404
+          return 'sin datos'
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    };
+
+    //cargarDatos();
+
+    //////////
+    // usa una IIFE asincrona 
+    (async () => {
+      const datos = await cargarDatos();
+      console.log(datos);
+    })();
+
+    ///////////////
+    (async function () { // funcion async para crear funciones asincrona y esperar con await
+
+
+try {
+  const url = `https://jsonplaceholder.typicode.com/photos`
+
+  let datos2 = await fetch(url) // pendiente
+
+  let fotos = await datos2.json() // desempaquetar // pendiente
+
+  // mostrar los primeros 20 títulos de álbumes de acuerdo al número de id indicados por la URL.
+
+  for (let i = 0; i < 20; i++) {
+    console.log(fotos[i].title)
+    // h3.textContent += `foto ${fotos[i].id}`
+    h3.innerHTML += `foto ${fotos[i].id}<br>`
+  }
+
+  // fotos = fotos.slice(0, 20)
+  // fotos.map(foto => {
+  // console.log(foto)
+  // console.log('as')}) // (foto.title) singular .title // solo los titulos
+
+  //console.log(fotos) // 5000
+
+} catch (error) {
+  alert(error)
+}
+})()
+
+  </script>
+</body>
+
+</html>

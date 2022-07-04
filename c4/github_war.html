@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batalla Github</title>
+</head>
+
+<style>
+  h1 {
+    text-align: center;
+  }
+
+  .container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .us {
+    border: 2px solid black;
+    width: 400px;
+    height: 240px;
+    display: inline-block;
+    text-align: center;
+  }
+
+  ul {
+    list-style-type: none;
+    text-align: left;
+    margin: 30px;
+  }
+
+  span {
+    float: right;
+  }
+
+  .batalla {
+    display: block;
+    margin: 20px auto;
+  }
+
+  #ganador {
+    display: none;
+    text-align: center;
+    margin: 10px auto;
+  }
+
+  img {
+    width: 100px;
+  }
+
+  #imagenes {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+  }
+</style>
+
+<body>
+
+  <h1>Welcome to GitHub Battle</h1>
+
+  <div id="inicio">
+    <div class="container">
+      <div class="us">
+        <h2 id="usuario1"></h2>
+        <label for="usu">Username</label>
+        <input id="us1" type="text">
+        <button id="go1">Go</button>
+        <ul class="content">
+        </ul>
+      </div>
+      <div class="us">
+        <h2 id="usuario2"></h2>
+        <label for="usu">Username</label>
+        <input id="us2" type="text">
+        <button id="go2">Go</button>
+        <ul class="content2">
+        </ul>
+      </div>
+    </div>
+    <button class="batalla">Battle</button>
+
+    <div id="imagenes">
+      <div id="img_us1"></div>
+      <div id="img_us2"></div>
+    </div>
+  </div>
+
+  <div id="ganador">
+    <h3 id="gana"></h3>
+    <div id="img_win"></div>
+  </div>
+  <script>
+    /* ingresar 2 nombres de usuario y comparar su estado. Sin embargo, antes de llegar a eso, 
+    comienza por asegurar que si se ingresa un nombre de usuario no válido (es decir, 
+    no hay un usuario de GitHub asociado con ese nombre de usuario), se muestra un mensaje de error, 
+    ya sea como un "alert" o por medio de un modal.
+
+    Que haya 2 lugares disponibles para ingresar los nombres de usuario. 
+    Agrega un botón de BATALLA en la parte inferior. 
+    Cuando hagas clic en este ¡muestra al ganador de la batalla!
+     */
+
+    // vars html
+    const usuario1 = document.querySelector('#us1')
+    const usuario2 = document.querySelector('#us2')
+    const h2_us1 = document.querySelector('#usuario1')
+    const h2_us2 = document.querySelector('#usuario2')
+    const btn_batalla = document.querySelector('.batalla')
+    const ganador = document.querySelector('#gana')
+    const btn_go1 = document.querySelector('#go1')
+    const btn_go2 = document.querySelector('#go2')
+
+    const ul_content = document.querySelector('.content')
+    const ul_content2 = document.querySelector('.content2')
+
+    const imgUs1 = document.querySelector('#img_us1')
+    const imgUs2 = document.querySelector('#img_us2')
+    const imgWin = document.querySelector('#img_win')
+
+    // vars globals
+    let pr = nfe = nfo = pg = ts = 0
+    let names = ['+']
+    let datos1 = {}
+    let datos2 = {}
+    let avatar = ''
+
+    const cargarDatos = async (names) => {
+      try {
+        const url = `https://api.github.com/users/${names}`
+        const res = await fetch(url)
+        if (res.ok) {
+          const datos = await res.json()
+          return datos
+        } else {
+          return alert('usuario no existe')
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    h2_us1.textContent = localStorage.getItem('usuario1')
+    pr = localStorage.getItem('usuario1pr')
+    nfe = localStorage.getItem('usuario1nfe')
+    nfo = localStorage.getItem('usuario1nfo')
+    pg = localStorage.getItem('usuario1pg')
+    ts = localStorage.getItem('usuario1ts')
+    /* ul_content.innerHTML += `<li>Public Repositories<span>${pr}</span></li>
+        <li>Number of Followers <span>${nfe}</span> </li>
+        <li>Number Following <span>${nfo}</span> </li>
+        <li>Public Gists <span>${pg}</span> </li>
+        <li>Total Score <span>${ts}</span> </li>` */
+    btn_go1.addEventListener('click', function () {
+      //let lis = document.querySelectorAll(li)
+      
+      //ul_content.innerHTML = ''
+
+      (async () => {
+        datos1 = await cargarDatos(usuario1.value)
+        h2_us1.textContent = usuario1.value
+        const u1 = datos1.login
+        avatar = datos1.avatar_url
+        pr = datos1.public_repos
+        nfe = datos1.followers
+        nfo = datos1.following
+        pg = datos1.public_gists
+        ts = pr + nfe + nfo + pg
+
+        localStorage.setItem('usuario1', u1)
+        localStorage.setItem('usuario1pr', pr)
+        localStorage.setItem('usuario1nfe', nfe)
+        localStorage.setItem('usuario1nfo', nfo)
+        localStorage.setItem('usuario1pg', pg)
+        localStorage.setItem('usuario1ts', ts)
+
+        ul_content.innerHTML += `<li>Public Repositories<span>${pr}</span></li>
+        <li>Number of Followers <span>${nfe}</span> </li>
+        <li>Number Following <span>${nfo}</span> </li>
+        <li>Public Gists <span>${pg}</span> </li>
+        <li>Total Score <span>${ts}</span> </li>`
+
+        imgUs1.innerHTML = `<img src=${avatar} alt="imgUs1">`
+      })()
+    })
+
+    h2_us2.textContent = localStorage.getItem('usuario2')
+    pr2 = localStorage.getItem('usuario2pr')
+    nfe2 = localStorage.getItem('usuario2nfe')
+    nfo2 = localStorage.getItem('usuario2nfo')
+    pg2 = localStorage.getItem('usuario2pg')
+    ts2 = localStorage.getItem('usuario2ts')
+    /* ul_content2.innerHTML += `<li>Public Repositories<span>${pr2}</span></li>
+        <li>Number of Followers <span>${nfe2}</span> </li>
+        <li>Number Following <span>${nfo2}</span> </li>
+        <li>Public Gists <span>${pg2}</span> </li>
+        <li>Total Score <span>${ts2}</span> </li>` */
+    btn_go2.addEventListener('click', function () {
+
+      (async () => {
+        datos2 = await cargarDatos(usuario2.value)
+        h2_us2.textContent = usuario2.value
+        const u2 = datos2.login
+        avatar = datos2.avatar_url
+        pr = datos2.public_repos
+        nfe = datos2.followers
+        nfo = datos2.following
+        pg = datos2.public_gists
+        ts2 = pr + nfe + nfo + pg
+
+        localStorage.setItem('usuario2', u2)
+        localStorage.setItem('usuario2pr', pr)
+        localStorage.setItem('usuario2nfe', nfe)
+        localStorage.setItem('usuario2nfo', nfo)
+        localStorage.setItem('usuario2pg', pg)
+        localStorage.setItem('usuario2ts', ts)
+
+        ul_content2.innerHTML += `<li>Public Repositories<span>${pr}</span></li>
+        <li>Number of Followers <span>${nfe}</span> </li>
+        <li>Number Following <span>${nfo}</span> </li>
+        <li>Public Gists <span>${pg}</span> </li>
+        <li>Total Score <span>${ts2}</span> </li>`
+
+        imgUs2.innerHTML = `<img src=${avatar} alt="imgUs2">`
+      })()
+    })
+
+    async function batalla(names) {
+      let pts = 0
+      let win = ''
+
+      try {
+        const url = `https://api.github.com/users/`
+
+
+
+        /* for (let i = 0; i < 2; i++) {
+          let res = await fetch(url + names[i])
+          if (!res.ok) {
+            alert('us no existe')
+          } else {
+            const datos = await res.json();
+            if (datos.public_repos > pts) {
+              pts = datos.public_repos
+              win = datos.login              
+            } // else empate
+          }
+        } */
+        ganador.textContent = `${win} Win!`
+
+      } catch (error) {
+        alert(error)
+      }
+    }
+    //batalla(['mauriciovr7', 'monicacofre']) //'mauriciovr7', 'monicacofre', '+'
+
+    btn_batalla.addEventListener('click', function () {
+      document.getElementById("inicio").style.display = "none"
+      if (ts > ts2) {
+        ganador.textContent = `${datos1.login} Win!`
+        imgWin.innerHTML = `<img src=${datos1.avatar_url} alt="imgWin">`
+      } else if (ts < ts2) {
+        ganador.textContent = `${datos2.login} Win!`
+        imgWin.innerHTML = `<img src=${datos2.avatar_url} alt="imgWin">`
+      } else {
+        console.log('emp')
+        ganador.textContent = `Empate!`
+      }
+      document.getElementById("ganador").style.display = "block"
+    })
+
+    // **** refactorizar ****
+    // ver de a 3 ó 4 usuarios git
+  </script>
+</body>
+
+</html>
