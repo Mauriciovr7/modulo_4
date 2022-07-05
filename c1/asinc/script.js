@@ -1,6 +1,6 @@
 // variables HTML
 const input_ppal = document.querySelector('.input')
-const btn_add = document.querySelector('.boton-agregar')
+const boton_agregar = document.querySelector('.boton-agregar')
 const div_container = document.querySelector('.container')
 
 // let nuevaTarea = input_ppal.value
@@ -39,14 +39,9 @@ class Item {
     newDiv.appendChild(botonRemover)
     div_container.appendChild(newDiv)
 
-
     let div_item = document.querySelectorAll('.item')
-    for (let item of div_item) {
-    }
 
-    let btn_ed = document.querySelectorAll('.boton-editar')
-
-    btn_ed[i].addEventListener("click", function () {
+    botonEditar.addEventListener("click", function () {
       console.log('edit')
       console.log(this.previousSibling)
       if (this.previousSibling.hasAttribute('disabled')) { // == ''
@@ -70,10 +65,13 @@ class Item {
   }
 }
 
-btn_add.addEventListener('click', function () {
-  if (input_ppal.value) {
+boton_agregar.addEventListener('click', function () {
+  chequearInput() 
+})
+
+function chequearInput() {
+  if (input_ppal.value.trim()) {
     let nuevaTarea = new Item(input_ppal.value.trim())
     input_ppal.value = ''
   }
-})
-
+}

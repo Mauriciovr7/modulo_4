@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.min.css" integrity="sha512-CJ5goVzT/8VLx0FE2KJwDxA7C6gVMkIGKDx31a84D7P4V3lOVJlGUhC2mEqmMHOFotYv4O0nqAOD0sEzsaLMBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Batalla Github</title>
 </head>
 
@@ -22,7 +23,7 @@
   .us {
     border: 2px solid black;
     width: 400px;
-    height: 240px;
+    height: 360px;
     display: inline-block;
     text-align: center;
   }
@@ -30,7 +31,7 @@
   ul {
     list-style-type: none;
     text-align: left;
-    margin: 30px;
+    margin: 10px;
   }
 
   span {
@@ -95,6 +96,9 @@
     <h3 id="gana"></h3>
     <div id="img_win"></div>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.all.min.js" integrity="sha512-o/FohCnw63hew8nW4BnBfJaTjvc50EA/Uq5hDtm25VRdQGYDgsr72IGks8Ji9evnFfQjBd9S89CWlJh4+gYlEw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script>
     /* ingresar 2 nombres de usuario y comparar su estado. Sin embargo, antes de llegar a eso, 
     comienza por asegurar que si se ingresa un nombre de usuario no válido (es decir, 
@@ -123,6 +127,8 @@
     const imgUs2 = document.querySelector('#img_us2')
     const imgWin = document.querySelector('#img_win')
 
+    const div_contenedor = document.querySelector('.container')
+
     // const ul_store = document.createElement('ul')
 
     // vars globals
@@ -131,6 +137,7 @@
     let datos1 = {}
     let datos2 = {}
     let avatar = ''
+    let msj = ''
 
     const cargarDatos = async (names) => {
       try {
@@ -160,11 +167,11 @@
         <li>Total Score <span>${ts}</span> </li>` */
     btn_go1.addEventListener('click', function () {
       //let lis = document.querySelectorAll(li)
-      
+
       //ul_content.innerHTML = ''
 
       (async () => {
-        console.log('us_',usuario1.value,'_')
+        console.log('us_', usuario1.value, '_')
         datos1 = await cargarDatos(usuario1.value.trim())
         h2_us1.textContent = usuario1.value
         const u1 = datos1.login
@@ -239,21 +246,6 @@
 
       try {
         const url = `https://api.github.com/users/`
-
-
-
-        /* for (let i = 0; i < 2; i++) {
-          let res = await fetch(url + names[i])
-          if (!res.ok) {
-            alert('us no existe')
-          } else {
-            const datos = await res.json();
-            if (datos.public_repos > pts) {
-              pts = datos.public_repos
-              win = datos.login              
-            } // else empate
-          }
-        } */
         ganador.textContent = `${win} Win!`
 
       } catch (error) {
@@ -267,14 +259,23 @@
       if (ts > ts2) {
         ganador.textContent = `${datos1.login} Win!`
         imgWin.innerHTML = `<img src=${datos1.avatar_url} alt="imgWin">`
+        msj = `${datos1.login} Gana!`
       } else if (ts < ts2) {
         ganador.textContent = `${datos2.login} Win!`
         imgWin.innerHTML = `<img src=${datos2.avatar_url} alt="imgWin">`
+        msj = `${datos2.login} Gana!`
       } else {
         console.log('emp')
         ganador.textContent = `Empate!`
+        msj = 'Hay un empate!!!'
       }
       document.getElementById("ganador").style.display = "block"
+
+      Swal.fire(
+        'Resultado de la Batalla',
+        msj,
+        'success'
+      )
     })
 
     // **** refactorizar ****
