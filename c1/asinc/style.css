@@ -1,7 +1,5 @@
 body {
-  background-image: url(./todolist.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: rgb(27,49,82);
 }
 
 * {
@@ -20,42 +18,59 @@ button:hover {
   margin: 5px;
   border: none;
   border-radius: 10px;
-  background: rgb(40, 53, 147);
-  color: white;
-}
-
-.boton-editar {
-  width: 30px;
-  height: 30px;
-  margin: 5px;
-  border: none;
-  border-radius: 10px;
-  background: rgb(46, 125, 50);
-  color: white;
-}
-
-.boton-remover {
-  width: 30px;
-  height: 30px;
-  margin: 5px;
-  border: none;
-  border-radius: 10px;
   background: rgb(255, 6, 46);
   color: white;
 }
 
+.boton-editar, .boton-remover {
+  margin: 0 5px;
+  border: none;
+}
+
+.boton-editar{
+  color: #62d0ff;
+  width: 30px;
+  background: none;
+  font-size: 1.4rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.boton-remover {  
+  color: white;
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
+  background: rgb(255, 6, 46);
+  font-size: 20px;
+}
+
 h1 {
-  color: rgb(31, 97, 141);
-  text-shadow: 2px 2px 8px #D35400;
+  color: white;
+}
+
+.input, .item-input {
+  height: 50px;
+  border-radius: 10px;
+  padding: 0 20px;
+  text-align: start;
+  font-size: 18px;  
 }
 
 .input {
   width: 450px;
-  height: 50px;
   border: none;
-  border-radius: 10px;
   background: white;
-  font-size: 18px;
   margin: 5px;
-  padding: 0 20px;
+  outline: none;
+}
+
+.item-input {
+  width: 350px;
+  border: solid white 1px;
+  color: white;
+  background: none;
+}
+
+.item, .input-div {
+  margin-bottom: 10px;
 }

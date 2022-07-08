@@ -30,7 +30,7 @@ class Item {
     inputItem.setAttribute("disabled", '')
     inputItem.classList.add('item-input')
     inputItem.value = nuevaTarea
-    newDiv.classList.add('Item')
+    newDiv.classList.add('item')
 
     // botones: editar, remover
     botonEditar.innerHTML = '<i class="fas fa-lock"></i>'
